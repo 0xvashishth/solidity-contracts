@@ -60,7 +60,7 @@ contract FundMe{
 
     mapping(address=> uint256) public addressToAmountFunded;
     address public owner;
-
+    address[] public funders;
     constructor() public{
         owner = msg.sender;
     }
@@ -71,7 +71,7 @@ contract FundMe{
 
         
         addressToAmountFunded[msg.sender] += msg.value;
-         
+        funders.push(msg.sender);
     }
 
     function getVersion() public view returns(uint256){
@@ -94,10 +94,21 @@ contract FundMe{
         return ethAmountInUsd;
     }
 
-    
-
-    function withdraw() payable public {
+    modifier onlyOwner{
         require(msg.sender == owner);
+        _;
+    }
+
+    // modifier and require
+    function withdraw() payable onlyOwner public {
+        
         msg.sender.transfer(address(this).balance);
+        for(uint256 funderIndex=0;funderIndex<funders.length;funderIndex++){
+            address funder = funders[funderIndex];
+            addressToAmountFunded[funder] = 0;
+
+        }
+        funders = new address[](0);
+        
     }
 }
