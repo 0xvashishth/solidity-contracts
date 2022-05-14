@@ -41,10 +41,8 @@ abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
 # connecting to ganache
 
-w3 = Web3(
-    Web3.HTTPProvider("https://kovan.infura.io/v3/f6e016a92a82467597ede397598ce0e2")
-)
-chain_id = 42
+w3 = Web3(Web3.HTTPProvider("https://rpc-mumbai.maticvigil.com/"))
+chain_id = 80001
 my_address = "0xa62d5D83B71419626FE359C2a6b39cC975C9706d"
 private_key = os.getenv("PRIVATE_KEY")
 
